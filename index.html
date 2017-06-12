@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+#vidl_loadico_circle_mute{
+	position: relative;
+	z-index: 5;
+	width: 100%;
+	height: 100%;
+	top: -4px;
+	left: -6px;
+	transition: opacity 500ms;
+		-webkit-transition: opacity 500ms;
+		-moz-transition: opacity 500ms;
+		-ms-transition: opacity 500ms;
+		-o-transition: opacity 500ms;
+}
+#vidl_loadico_circle_time{
+	position: relative;
+	z-index: 5;
+	width: 100%;
+	height: 100%;
+	top: -6px;
+	left: -6px;
+	transition: opacity 500ms;
+		-webkit-transition: opacity 500ms;
+		-moz-transition: opacity 500ms;
+		-ms-transition: opacity 500ms;
+		-o-transition: opacity 500ms;
+}
+circle {
+	fill: rgba(0,0,0,0);
+	stroke-width: 3;
+	stroke-dasharray: 408px 408px;*/
+	/*-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);*/
+}
+#vidl_loadico_circle_time circle {
+  stroke: #eee;
+}
+#vidl_loadico_circle_time circle:nth-child(2n) {
+  stroke: #cd1b4f;
+}
+#vidl_loadico_circle_mute circle {
+  stroke: #eee;
+}
+#vidl_loadico_circle_mute circle:nth-child(2n) {
+  stroke: #cd1b4f;
+}
+.vidl_circle_comp_opacity{
+	opacity: 0;
+}
+.yndx_grn_video{
+	position: relative;
+	width: 100%;
+	pointer-events: auto;
+	height: 100%;
+}
+.yndx_grn_video:hover .yndx_grn_play{
+	opacity: 1;
+}
+.yndx_grn_video:hover .yndx_grn_mute{
+	opacity: 1;
+}
+.yndx_grn_play{
+background: url(play.png) no-repeat;
+background-size: 78px;
+position: absolute;
+z-index: 11;
+opacity: 0;
+transition: opacity .5s;
+	-webkit-transition: opacity .5s;
+	-moz-transition: opacity .5s;
+	-ms-transition: opacity .5s;
+	-o-transition: opacity .5s;
+width: 78px;
+height: 78px;
+top: calc(50% - 39px);
+left: calc(50% - 39px);
+}
+.yndx_grn_mute{
+	background: url(mute.png) no-repeat;
+	background-size: 41px;
+	position: absolute;
+	z-index: 11;
+	top: 20px;
+	text-align: center;
+	width: 40px;
+	height: 42px;
+	right: 20px;
+	opacity: 0;
+	transition: opacity .5s;
+		-webkit-transition: opacity .5s;
+		-moz-transition: opacity .5s;
+		-ms-transition: opacity .5s;
+		-o-transition: opacity .5s;
+}
+.opacity{
+	opacity: 0;
+	
+}
+</style>
+<body>
+<div class="yndx_grn_video" id="yndx_grn_video">
+							<div class="yndx_grn_play" id="yndx_grn_play"><div id="vidl_loadico_circle_time"></div></div>
+			
+			<div class="yndx_grn_mute" id="yndx_grn_mute"><div id="vidl_loadico_circle_mute"></div></div>
+			<video id="video" class="yndx_grn_video_mp4" autoplay loop width="100%" height="100%" class="yndx_video">
+				<source id='video' src="video.mp4" type="video/mp4">
+
+			</video></div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<h1>ghgj</h1>
+	<script>
+
+var fps = 25; //кадров секунду обновляеться анимация
+
+var maxtime = 30000; //мак. возможная длительность анимации в мс
+var timerend = 3000; //таймер выполение анимации в мс
+var timer;
+var start = Date.now();// сохранить время начала
+var starttime = Date.now();
+
+var play = document.getElementById("yndx_grn_play"); 
+var mute = document.getElementById("yndx_grn_mute"); 
+
+var timevideofull;
+var myVideo = document.getElementById("video");
+var cyclevideofull = 0;
+
+myVideo.addEventListener('loadedmetadata', function() {
+    var timevideofull = myVideo.duration;
+    //console.log(myVideo.duration);
+});
+myVideo.volume = 0.0;
+
+	//отрисовываем svg круговая загрузка
+	vidl_loadico_circle_mute.innerHTML = '<svg width="50" height="50"><circle r="20" cx="-25" cy="25" transform="rotate(-90.1)" /><circle id="vidl_circle_comp"  style="stroke-dasharray: 0px 130px;" r="20" cx="-25" cy="25" transform="rotate(-90.1)" /></svg>';
+
+	vidl_loadico_circle_time.innerHTML = '<svg width="90" height="90"><circle r="40" cx="-45" cy="45" transform="rotate(-90.1)" /><circle id="vidl_circle_comp_time" transform="rotate(-90.1)" style="stroke-dasharray: 0px 260px;" r="40" cx="-45" cy="45" /></svg>';
+function executiontimer(){
+	clearInterval(timer);
+	timer = setInterval(function() {
+		var mutePassed = Date.now() - start; // вычислить сколько времени прошло с начала анимации
+
+		if (mutePassed >= timerend) {
+		 	clearInterval(timer); // конец через заданый интервал "timerend" в милисекундах
+		 	vidl_loadico_circle_mute.classList.add("vidl_circle_comp_opacity");
+		 	myVideo.volume = 0.5;
+		 	mute.style.background = "url(mute_on.png)";
+		 return;
+		}
+
+	draw(mutePassed);   // рисует состояние анимации, соответствующее времени
+}, 1000 / fps);
+}
+
+var timertime = setInterval(function() {
+		var timePassed = Date.now() - starttime; // вычислить сколько времени прошло с начала анимации
+	drawtime(timePassed);   // рисует состояние анимации, соответствующее времени
+}, 1000 / fps);
+
+	//функция отрисовки кадра
+	function draw(mutePassed) {
+		vidl_circle_comp.style.strokeDasharray = Math.round(mutePassed / timerend * 100 * 130 / 100) + 'px 130px';
+	}
+
+	function drawtime(timePassed) {
+		vidl_circle_comp_time.style.strokeDasharray = Math.round(myVideo.currentTime / myVideo.duration * 100 * 260 / 100) + 'px 260px';
+
+		if (timePassed >= maxtime){
+			myVideo.pause(); 
+		}
+	}
+	yndx_grn_video.onmouseover = function() {
+		executiontimer();
+		start = Date.now();
+};
+
+	yndx_grn_video.onmouseout = function() {
+		var start = Date.now();
+		clearInterval(timer);
+	}; 
+
+play.onclick = function() {
+
+    if (myVideo.paused) {
+        myVideo.play(); 
+        maxtime = Infinity;
+        myVideo.volume = 0.5;
+        mute.style.background = "url(mute_on.png)";
+        clearInterval(timer); 
+		vidl_loadico_circle_mute.classList.add("vidl_circle_comp_opacity");
+		// starttime = Date.now();
+    }else {
+        myVideo.pause(); 
+
+           }
+} 
+setInterval(autoicoplay, 100);  
+  function autoicoplay(){
+  if (myVideo.paused) {
+        play.style.background = "url(play.png)";
+    }else{
+        play.style.background = "url(pause.png)";
+    }
+}
+
+mute.onclick = function() {
+    if (myVideo.volume == 0.5) {
+        myVideo.volume = 0.0;
+        mute.style.background = "url(mute.png)";
+    }
+    else {
+        myVideo.volume = 0.5;
+        mute.style.background = "url(mute_on.png)";
+        clearInterval(timer); 
+		vidl_loadico_circle_mute.classList.add("vidl_circle_comp_opacity");
+    }
+} 
+
+	</script>
+</body>
+</html>
